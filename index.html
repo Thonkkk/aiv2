@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cookie Clicker</title>
+</head>
+<body>
+  <button onclick="incrementCounter()">Click me</button>
+  <p>Number of cookies: <span id="counter">0</span></p>
+  <p>Cookies per second: <span id="cps">0</span></p>
+  <hr>
+  <h2>Shop</h2>
+  <form>
+    <label for="upgrade1">Upgrade 1: 10 cookies</label>
+    <button onclick="buyUpgrade(10, 1)">Buy</button>
+    <br>
+    <label for="upgrade2">Upgrade 2: 100 cookies</label>
+    <button onclick="buyUpgrade(100, 10)">Buy</button>
+    <br>
+    <label for="upgrade3">Upgrade 3: 1000 cookies</label>
+    <button onclick="buyUpgrade(1000, 100)">Buy</button>
+  </form>
+  <hr>
+  <h2>Achievements</h2>
+  <ul id="achievements">
+  </ul>
+  <hr>
+  <h2>Prestige</h2>
+  <button onclick="prestige()">Reset</button>
+  <p>Prestige level: <span id="prestigeLevel">0</span></p>
+  <script>
+    let counter = 0;
+    let cps = 0;
+    let prestigeLevel = 0;
+    let achievements = [];
+    const achievementsList = document.getElementById('achievements');
+
+    function incrementCounter() {
+      counter += 1 + cps;
+      document.getElementById('counter').innerText = counter;
+      checkAchievements();
+    }
+
+    function buyUpgrade(cost, cpsIncrease) {
+      if (counter >= cost) {
+        counter -= cost;
+        cps += cpsIncrease;
+        document.getElementById('counter').innerText = counter;
+        document.getElementById('cps').innerText = cps;
+      } else {
+        alert('Not enough cookies!');
+      }
+    }
+
+    function checkAchievements() {
+      if (counter >= 10 && !achievements.includes('Achievement 1')) {
+        achievements.push('Achievement 1');
+        achievementsList.innerHTML += '<li>Achievement 1: 10 cookies</li>';
+      }
+      if (counter >= 100 && !achievements.includes('Achievement 2')) {
+        achievements.push('Achievement 2');
+        achievementsList.innerHTML += '<li>Achievement 2: 100 cookies</li>';
+      }
+      if (counter >= 1000 && !achievements.includes('Achievement 3')) {
+        achievements.push('Achievement 3');
+        achievementsList.innerHTML += '<li>Achievement 3: 1000 cookies</li>';
+      }
+    }
+
+    function prestige() {
+      prestigeLevel += 1;
+      counter = 0;
+      cps = 0;
+      achievements = [];
+      achievementsList
+.innerHTML = '';
+      document.getElementById('counter').innerText = counter;
+      document.getElementById('cps').innerText = cps;
+      document.getElementById('prestigeLevel').innerText = prestigeLevel;
+    }
+  </script>
+</body>
+</html>
